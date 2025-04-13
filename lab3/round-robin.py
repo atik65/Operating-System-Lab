@@ -7,7 +7,6 @@ def round_robin(process_list, time_quanta):
     backup = {}
     queue = deque()
     first_response = {}  # To track first execution time
-
     # Sort processes by arrival time
     process_list.sort()
 
@@ -20,8 +19,6 @@ def round_robin(process_list, time_quanta):
         first_response[pid] = -1  # Initialize response time tracking
 
     remaining_processes = process_list[:]
-
-    # print("remening processes = ", remaining_processes)
     
     while remaining_processes or queue:
         # Add newly available processes to the queue
@@ -39,7 +36,7 @@ def round_robin(process_list, time_quanta):
         # Process execution
         process = queue.popleft()
         pid = process[2]
-        
+
         # Record first response time if it's the first execution
         if first_response[pid] == -1:
             first_response[pid] = time - process[0]
@@ -87,19 +84,8 @@ def collect_input():
     return process_list, time_quanta
 
 if __name__ == "__main__":
-    # demo_processes = [
-    #     [0, 5, "P1"],
-    #     [1, 4, "P2"],
-    #     [2, 2, "P3"],
-    #     [4, 1, "P4"]
-    # ]
-    
-    # demo_time_quanta = 2
-    # result = round_robin(demo_processes, demo_time_quanta)
-
     inputs = collect_input()
     result = round_robin(inputs[0], inputs[1])
-
 
     print("Gantt Chart:", result["gantt_chart"])
     print_table(result["completed"])
