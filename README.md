@@ -31,19 +31,29 @@ This repository contains implementations of various Operating System concepts, p
    ![Round Robin Output](lab3/Screenshot%20From%202025-02-28%2002-35-00.png)
 
 4. **Lab 4: Priority Scheduling**
+
    - Priority-based preemptive scheduling
    - Located in `lab4/priority-preemptive/`
 
+   ![Priority Scheduling Output](lab4/priority-preemptive/output.png)
+
 ### Disk Scheduling Algorithms
 
-1. **Lab 4 & 5: SSTF (Shortest Seek Time First)**
+1. **Lab 4: FCFS (First Come First Serve)**
+
+   - Disk scheduling based on minimum seek time
+   - Implementation in `lab4/disk-scheduling/fcfs.py`
+
+   ![FCFS Output](lab4/disk-scheduling/output.png)
+
+2. **Lab 5: SSTF (Shortest Seek Time First)**
 
    - Disk scheduling based on minimum seek time
    - Implementation in `lab5/sstf.py`
 
    ![SSTF Output](lab5/Screenshot%20From%202025-03-14%2023-13-01.png)
 
-2. **Lab 6: SCAN and C-SCAN**
+3. **Lab 6: SCAN and C-SCAN**
 
    - SCAN (Elevator) algorithm
    - Circular SCAN algorithm
