@@ -100,7 +100,7 @@ def round_robin_v1(process_list, time_quanta):
     while remaining_process or queue:
 
         # add the available process to queue
-        for process in remaining_process:
+        for process in remaining_process[:]:
             if process[0] <= time:
                 queue.append(process)
                 remaining_process.remove(process)
@@ -150,6 +150,75 @@ def round_robin_v1(process_list, time_quanta):
     }
 
 
+# process = [arrival, burst, pid]
+def round_robin_v2(process_list, time_quanta):
+    time = 0
+    gannt = []
+    completed = {}
+    backup = {}
+    first_response = {}
+    queue = deque()
+
+    # handle backup and initialize first response
+    for process in process_list:
+        pid = process[2]
+        first_response[pid] = -1
+        backup[pid] = [process[0], process[1], process[2]]
+    
+    remaining_process = process_list[:]
+
+    while remaining_process or queue:
+
+        # handle avaiable process 
+        for process in remaining_process[:]:
+            arrival_time = process[0]
+            if arrival_time <= time:
+                queue.append(process)
+                remaining_process.remove(process)
+        
+        # handle corner case -- no process in queue
+        if not queue:
+            time += 1
+            gannt.append('Idle')
+            continue
+        
+        process = queue.popleft()
+        pid = process[2]
+
+        # handle first response 
+        if first_response[pid] == -1:
+            first_response[pid] = time - process[0]
+        
+        execution_time = min(time_quanta, process[1])
+        time += execution_time
+        process[1] -= execution_time
+        gannt.append(pid)
+
+        # check if there new process arrived
+        for p in remaining_process[:]:
+            if p[0] <= time:
+                queue.append(p)
+                remaining_process.remove(p)
+        
+        # check if the process has ended
+        if process[1] == 0:
+            arrival_time = backup[pid][0]
+            burst_time = backup[pid][1]
+            ct = time
+            tat = ct - arrival_time
+            wt = tat - burst_time
+            rt = first_response[pid]
+
+            completed[pid] = [pid, arrival_time, burst_time, ct, wt, tat, rt]
+        else:
+            queue.append(process)
+    
+    return {
+        'gannt': gannt,
+        'completed': completed
+    }
+
+
 def print_table(completed):
     print("Process\tArrival\tBrust\tCT\tWT\tTAT\tRT")
 
@@ -158,6 +227,7 @@ def print_table(completed):
 
 
 if __name__ == "__main__":
+    # process = [arrival, burst, pid]
     process_list = [
             [0,5,'p1'],
             [1,4,'p2'],
@@ -167,7 +237,7 @@ if __name__ == "__main__":
         
     time_quanta = 2
         
-    res = round_robin_v1(process_list, time_quanta)
+    res = round_robin_v2(process_list, time_quanta)
 
     print(res['gannt'])
 
