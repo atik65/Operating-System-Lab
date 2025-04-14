@@ -1,1 +1,0 @@
-# process = [arrival, burst, pid]

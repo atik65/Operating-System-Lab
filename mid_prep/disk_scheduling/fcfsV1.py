@@ -1,5 +1,4 @@
 
-
 def fcfs(req_sequences, head):
     current_head = head
     sequence = [head]
