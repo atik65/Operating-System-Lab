@@ -45,6 +45,7 @@ def round_robin(process_list, time_quanta):
         execution_time = min(time_quanta, process[1])
         gantt_chart.append(pid)
         time += execution_time
+        # decrease the brust time
         process[1] -= execution_time
 
         # Check for new arrivals while executing
