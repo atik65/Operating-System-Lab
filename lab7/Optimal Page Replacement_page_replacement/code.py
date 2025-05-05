@@ -30,4 +30,4 @@ def optimal_page_replacement(pages, capacity):
 
 pages = [7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2, 3]
 capacity = 4
-optimal_page_replacement(pages, capacity)
+optimal_page_replacement(pages, capacity) 
